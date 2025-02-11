@@ -33,6 +33,7 @@ class OnlineStatusWidget extends StatefulWidget {
 class _OnlineStatusWidgetState extends State<OnlineStatusWidget> {
   final _svcStopped = Get.find<RxBool>(tag: 'stop-service');
   final _svcIsUsingPublicServer = true.obs;
+  String customServer = bind.mainGetOptionSync(key: "custom-rendezvous-server");
   Timer? _updateTimer;
 
   double get em => 14.0;
@@ -159,8 +160,8 @@ class _OnlineStatusWidgetState extends State<OnlineStatusWidget> {
           : stateGlobal.svcStatus.value == SvcStatus.connecting
               ? translate("connecting_status")
               : stateGlobal.svcStatus.value == SvcStatus.notReady
-                  ? translate("not_ready_status")
-                  : translate('Ready'),
+                  ? translate("not_ready_status") + ". " + translate('Server') + ": " + customServer
+                  : translate('Ready') + ". " + translate('Server') + ": " + customServer,
       style: TextStyle(fontSize: em),
     );
   }
